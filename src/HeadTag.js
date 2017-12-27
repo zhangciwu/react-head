@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
-import buildSelector from './buildSelector';
 
 export default class HeadTag extends Component {
   static contextTypes = {
@@ -24,8 +23,8 @@ export default class HeadTag extends Component {
     // eslint-disable-next-line react/no-did-mount-set-state
     this.setState({ canUseDOM: true });
 
-    const { tag, children, ...rest } = this.props; // eslint-disable-line react/prop-types
-    const ssrTags = document.head.querySelector(`${tag}${buildSelector(rest)}[data-rh=""]`);
+    const { tag } = this.props; // eslint-disable-line react/prop-types
+    const ssrTags = document.head.querySelector(`${tag}[data-rh=""]`);
 
     /* istanbul ignore else */
     if (ssrTags) {

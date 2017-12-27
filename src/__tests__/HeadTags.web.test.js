@@ -37,7 +37,7 @@ describe('HeadTag during client rendering', () => {
   );
 
   it('removes head tags added during ssr', () => {
-    expect(qsMock).toHaveBeenCalledWith('meta[name="x"][content="testing"][data-rh=""]');
+    expect(qsMock).toHaveBeenCalledWith('meta[data-rh=""]');
     expect(qsMock).toHaveBeenCalledWith('title[data-rh=""]');
     expect(removeMock).toHaveBeenCalledTimes(2);
   });

@@ -32,19 +32,19 @@ describe('HeadTag during client', () => {
   }`;
 
   TestRenderer.create(
-    <div>
+    <HeadProvider>
       Yes render
       <HeadTag tag="test" name="x" content="testing" />
       <Title>Test title</Title>
       <Style>{globalCss}</Style>
       <Link href="index.css" />
       <Meta charset="utf-8" />
-    </div>
+    </HeadProvider>
   );
 
   it('removes head tags added during ssr', () => {
     expect(qsMock).toHaveBeenCalledWith('[data-rh=""]');
-    expect(qsMock).toHaveBeenCalledTimes(5);
+    expect(qsMock).toHaveBeenCalledTimes(1);
     expect(removeMock).toHaveBeenCalledTimes(5);
     // first document.head.querySelectorAll removes all ssr nodes, rest just got blank Nodelist
   });

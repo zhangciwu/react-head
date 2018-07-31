@@ -6,9 +6,14 @@ const cascadingTags = ['title', 'meta'];
 
 export default class HeadProvider extends React.Component {
   static propTypes = {
-    headTags: PropTypes.array.isRequired,
+    headTags: PropTypes.array,
     children: PropTypes.node.isRequired,
   };
+
+  componentDidMount() {
+    const ssrTags = document.head.querySelectorAll(`[data-rh=""]`);
+    ssrTags.forEach(e => e.remove());
+  }
 
   indices = new Map();
 
@@ -66,3 +71,7 @@ export default class HeadProvider extends React.Component {
     return <Provider value={this.state}>{this.props.children}</Provider>;
   }
 }
+
+HeadProvider.defaultProps = {
+  headTags: [],
+};

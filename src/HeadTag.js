@@ -19,9 +19,6 @@ export default class HeadTag extends React.Component {
     this.setState({ canUseDOM: true });
 
     const { tag, ...rest } = this.props;
-    const ssrTags = document.head.querySelectorAll(`[data-rh=""]`);
-
-    ssrTags.forEach(e => e.remove());
 
     this.index = this.headTags.addClientTag(tag, rest.name);
   }

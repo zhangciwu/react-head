@@ -14,5 +14,6 @@ module.exports = {
     'react/no-did-mount-set-state': 0,
     'react/sort-comp': 0,
     'react/no-unused-state': 0,
+    'import/prefer-default-export': 0,
   },
 };

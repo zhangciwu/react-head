@@ -2,6 +2,7 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { Consumer } from './headTagsContext';
+import { isBrowser } from './common';
 
 export default class HeadTag extends React.Component {
   static propTypes = {
@@ -15,13 +16,7 @@ export default class HeadTag extends React.Component {
   headTags = null;
   index = -1;
 
-  componentDidMount() {
-    this.setState({ canUseDOM: true });
-
-    const { tag, ...rest } = this.props;
-
-    this.index = this.headTags.addClientTag(tag, rest.name);
-  }
+  componentDidMount() {}
 
   componentWillUnmount() {
     this.headTags.removeClientTag(this.props.tag, this.index);
@@ -35,7 +30,7 @@ export default class HeadTag extends React.Component {
         {headTags => {
           this.headTags = headTags;
 
-          if (this.state.canUseDOM) {
+          if (isBrowser) {
             if (!headTags.shouldRenderTag(Tag, this.index)) {
               return null;
             }

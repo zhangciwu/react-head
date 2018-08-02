@@ -15,11 +15,15 @@ export default class HeadTag extends React.Component {
 
   headTags = null;
   index = -1;
+  domRef;
 
-  componentDidMount() {}
+  constructor(props) {
+    super(props);
+    this.domRef = React.createRef();
+  }
 
   componentWillUnmount() {
-    this.headTags.removeClientTag(this.props.tag, this.index);
+    this.domRef.current.remove();
   }
 
   render() {
@@ -31,10 +35,7 @@ export default class HeadTag extends React.Component {
           this.headTags = headTags;
 
           if (isBrowser) {
-            if (!headTags.shouldRenderTag(Tag, this.index)) {
-              return null;
-            }
-            const ClientComp = <Tag {...rest} />;
+            const ClientComp = <Tag {...rest} ref={this.domRef} />;
             return ReactDOM.createPortal(ClientComp, document.head);
           }
 

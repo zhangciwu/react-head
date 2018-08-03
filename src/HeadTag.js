@@ -10,12 +10,12 @@ export default class HeadTag extends React.Component {
   };
 
   state = {
-    canUseDOM: false,
+    discarded: false,
   };
 
   headTags = null;
-  index = -1;
   domRef;
+  hasAssignToProvider = false;
 
   constructor(props) {
     super(props);
@@ -23,7 +23,11 @@ export default class HeadTag extends React.Component {
   }
 
   componentWillUnmount() {
-    this.domRef.current.remove();
+    this.headTags.removeClientInstance(this);
+  }
+
+  componentDidMount() {
+    this.headTags.addClientInstance(this);
   }
 
   render() {
@@ -34,7 +38,12 @@ export default class HeadTag extends React.Component {
         {headTags => {
           this.headTags = headTags;
 
+          if (this.state.discarded) {
+            return null;
+          }
+
           if (isBrowser) {
+            // if (!this.hasAssignToProvider) {
             const ClientComp = <Tag {...rest} ref={this.domRef} />;
             return ReactDOM.createPortal(ClientComp, document.head);
           }

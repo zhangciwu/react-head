@@ -1,3 +1,7 @@
+/**
+ * @jest-environment node
+ */
+
 import * as React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { HeadProvider, HeadTag, Title, Style, Meta, Link } from '../';

@@ -79,7 +79,7 @@
     "rollup-plugin-size-snapshot": "^0.5.1"
   },
   "dependencies": {
-    "@babel/runtime": "7.0.0-beta.51"
+    "@babel/runtime": "7.0.0-beta.55"
   },
   "peerDependencies": {
     "react": ">=16.3",

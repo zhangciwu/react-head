@@ -3,7 +3,7 @@
  */
 
 import * as React from 'react';
-import TestRenderer from 'react-test-renderer';
+import { renderToStaticMarkup } from 'react-dom/server';
 
 jest.setMock('react-dom', {
   createPortal: children => <>{children}</>,
@@ -14,7 +14,7 @@ describe('HeadProvider', () => {
 
   it('adds HeadTags to given array from component tree', () => {
     const arr = [];
-    TestRenderer.create(
+    renderToStaticMarkup(
       <HeadProvider headTags={arr}>
         <div>
           <HeadTag tag="tag1" name="name1" another="value1" />

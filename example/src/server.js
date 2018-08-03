@@ -3,7 +3,7 @@ import React from 'react';
 import { StaticRouter } from 'react-router-dom';
 import express from 'express';
 import { renderToString } from 'react-dom/server';
-import { HeadCollector } from 'react-head';
+import { HeadProvider } from 'react-head';
 import App from './App';
 
 const assets = require(process.env.RAZZLE_ASSETS_MANIFEST);
@@ -17,9 +17,9 @@ server
     const headTags = [];
     const markup = renderToString(
       <StaticRouter context={context} location={req.url}>
-        <HeadCollector headTags={headTags}>
+        <HeadProvider headTags={headTags}>
           <App />
-        </HeadCollector>
+        </HeadProvider>
       </StaticRouter>
     );
 
@@ -28,9 +28,9 @@ server
     } else {
       res.status(200).send(
         `<!doctype html>
-    <html lang="">
+<html lang="">
     <head>
-        <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta charSet='utf-8' />
         <meta name="viewport" content="width=device-width, initial-scale=1">
         ${

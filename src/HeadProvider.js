@@ -10,9 +10,15 @@ export default class HeadProvider extends React.Component {
     children: PropTypes.node.isRequired,
   };
 
+  headInstances = [];
+
   componentDidMount() {
     const ssrTags = document.head.querySelectorAll(`[data-rh=""]`);
     ssrTags.forEach(e => e.remove());
+  }
+
+  componentWillUnmount() {
+    this.headInstances = [];
   }
 
   state = {
@@ -29,6 +35,31 @@ export default class HeadProvider extends React.Component {
         }
       }
       headTags.push(tagNode);
+    },
+    addClientInstance: instance => {
+      const { headInstances } = this;
+
+      if (cascadingTags.indexOf(instance.props.tag) > -1) {
+        headInstances.forEach(ins => {
+          if (
+            ins.props.tag === instance.props.tag &&
+            ins.props.name === instance.props.name
+          ) {
+            ins.setState({
+              discarded: true, // discarded component renders null.
+            });
+          }
+        });
+      }
+      headInstances.push(instance);
+    },
+
+    removeClientInstance: instance => {
+      const { headInstances } = this;
+      const index = headInstances.indexOf(instance);
+      if (index > -1) {
+        headInstances.splice(index, 1);
+      }
     },
   };
 

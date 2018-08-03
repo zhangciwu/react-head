@@ -24,6 +24,7 @@ const Home = () => (
       Click the example contact page below to see how the Header tags will
       update
     </p>
+    <HeadTag tag="meta" name="example" content="overwrite" />
     <Link to="/contact">Contact Page</Link>
     <ul className="Home-resources">
       <li>

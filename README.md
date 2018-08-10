@@ -60,7 +60,7 @@ res.send(`
 
 ### Client setup
 
-There is nothing special required on the client, just render `<HeadTag />` components whenever you want to inject a tag in the `<head />`.
+Wrap your app with `<HeadProvider />` on the client, render `<HeadTag />` components whenever you want to inject a tag in the `<head />`.
 
 ```js
 import * as React from 'react';

@@ -21,6 +21,17 @@ export default class HeadProvider extends React.Component {
     this.headInstances = [];
   }
 
+  findLastDuplicatedInstance(tag, name, toSet) {
+    const { headInstances } = this;
+    for (let i = headInstances.length - 1; i >= 0; i -= 1) {
+      const ins = headInstances[i];
+      if (ins.props.tag === tag && ins.props.name === name) {
+        ins.setState(toSet);
+        break;
+      }
+    }
+  }
+
   state = {
     addServerTag: tagNode => {
       const { headTags } = this.props;
@@ -40,16 +51,13 @@ export default class HeadProvider extends React.Component {
       const { headInstances } = this;
 
       if (cascadingTags.indexOf(instance.props.tag) > -1) {
-        headInstances.forEach(ins => {
-          if (
-            ins.props.tag === instance.props.tag &&
-            ins.props.name === instance.props.name
-          ) {
-            ins.setState({
-              discarded: true, // discarded component renders null.
-            });
+        this.findLastDuplicatedInstance(
+          instance.props.tag,
+          instance.props.name,
+          {
+            discarded: true, // discarded component renders null.
           }
-        });
+        );
       }
       headInstances.push(instance);
     },
@@ -59,6 +67,15 @@ export default class HeadProvider extends React.Component {
       const index = headInstances.indexOf(instance);
       if (index > -1) {
         headInstances.splice(index, 1);
+      }
+      if (cascadingTags.indexOf(instance.props.tag) > -1) {
+        this.findLastDuplicatedInstance(
+          instance.props.tag,
+          instance.props.name,
+          {
+            discarded: false,
+          }
+        );
       }
     },
   };
